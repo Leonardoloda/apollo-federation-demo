@@ -1,0 +1,17 @@
+{
+  "name": "federation",
+  "version": "1.0.0",
+  "scripts": {
+    "start:subgraph": "lerna run start --parallel --scope users --scope reviews --scope formatter",
+    "start:gateway": "lerna run start --scope gateway"
+  },
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^6.5.1"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
+
