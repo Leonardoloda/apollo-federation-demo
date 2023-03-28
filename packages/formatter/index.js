@@ -3,9 +3,7 @@ const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 const gql = require("graphql-tag");
 
-const formatOptions = Object.freeze({
-  CONCAT: "CONCAT",
-});
+require("dotenv").config({ path: "./.env" });
 
 // --------------------------------------------
 
@@ -36,7 +34,9 @@ const server = new ApolloServer({
   schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
 });
 
-startStandaloneServer(server, { listen: { port: 4003 } }).then(({ url }) =>
-  console.info("running", url)
-);
+startStandaloneServer(server, {
+  listen: { port: process.env.FORMATTER_PORT },
+}).then(({ url }) => console.info("running", url));
+
+
 

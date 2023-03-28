@@ -2,8 +2,9 @@
   "name": "federation",
   "version": "1.0.0",
   "scripts": {
-    "start:subgraph": "lerna run start --parallel --scope users --scope reviews --scope formatter",
-    "start:gateway": "lerna run start --scope gateway"
+    "start:subgraphs": "lerna run start --parallel --scope users --scope reviews --scope formatter",
+    "start:gateway": "lerna run start --scope gateway",
+    "start": "npm run start:subgraphs & npm run start:gateway"
   },
   "license": "MIT",
   "private": true,

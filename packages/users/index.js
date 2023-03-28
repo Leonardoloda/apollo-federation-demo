@@ -3,6 +3,8 @@ const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 const { gql } = require("graphql-tag");
 
+require("dotenv").config({ path: "./.env" })
+
 let users = [
   {
     id: "1",
@@ -46,7 +48,10 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    users: () => users,
+    users: (parent, ctx, rd, th) => {
+      console.debug("Ctonext", ctx , rd, parent, th)
+      return users
+    },
     user: (_, { id }) => users.find((u) => u.id === id),
   },
   Mutation: {
@@ -67,7 +72,8 @@ const server = new ApolloServer({
   schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
 });
 
-startStandaloneServer(server, { listen: { port: 4001 } }).then(({ url }) =>
-  console.info("running", url)
-);
+startStandaloneServer(server, {
+  listen: { port: process.env.USERS_PORT },
+}).then(({ url }) => console.info("running", url));
+
 

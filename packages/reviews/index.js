@@ -3,6 +3,8 @@ const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 const gql = require("graphql-tag");
 
+require("dotenv").config({ path: "./.env" });
+
 let reviews = [
   { userId: 1, id: "1", body: "Reviews 1" },
   { userId: 2, id: "2", body: "Reviews 2" },
@@ -60,7 +62,9 @@ const server = new ApolloServer({
   schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
 });
 
-startStandaloneServer(server, { listen: { port: 4002 } }).then(({ url }) =>
-  console.info("running", url)
-);
+startStandaloneServer(server, {
+  listen: { port: process.env.REVIEWS_PORT },
+}).then(({ url }) => console.info("running", url));
+
+
 
